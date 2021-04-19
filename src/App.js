@@ -1,6 +1,9 @@
 import React from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Image from 'react-bootstrap/Image';
+import Navbar from 'react-bootstrap/Navbar';
+import Form from 'react-bootstrap/Form';
 import './App.css';
 
 
@@ -33,10 +36,14 @@ class App extends React.Component {
 
     return (
       <>
+      <Navbar className="bg-light justify-content-between">
         <h2> Enter your city to learn more</h2>
+        <Form inline>
         <input onChange={(e) => this.setState({ searchQuery: e.target.value })} placeholder="search for a city"></input>
 
         <button onClick={this.getLocation}>Explore!</button>
+        </Form>
+        </Navbar>
         {this.state.location.place_id &&
           <>
             <h2>The city is: {this.state.location.display_name}</h2>
@@ -44,7 +51,9 @@ class App extends React.Component {
             <h3>The lattitude is: {this.state.location.lat}</h3>
 
             <h3>The longitude is: {this.state.location.lon}</h3>
+            {/* <Image fluid> */}
             <img src={img} alt="location" id='map'/>
+            {/* </Image> */}
             
           </>
 
