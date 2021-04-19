@@ -26,6 +26,7 @@ class App extends React.Component {
   }
 
   render() {
+    const img = `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_CITY_KEY}&center=${this.state.location.lat},${this.state.location.lon}&format=jpg&zoom=9`;
 
     return (
       <>
@@ -40,6 +41,9 @@ class App extends React.Component {
             <h3>The lattitude is: {this.state.location.lat}</h3>
 
             <h3>The longitude is: {this.state.location.lon}</h3>
+
+            <img src={img} alt="location" id='map'/>
+            
           </>
 
         }
