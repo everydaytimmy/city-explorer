@@ -1,5 +1,8 @@
 import React from 'react';
 import axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css';
+
 
 class App extends React.Component {
   constructor(props) {
@@ -41,7 +44,6 @@ class App extends React.Component {
             <h3>The lattitude is: {this.state.location.lat}</h3>
 
             <h3>The longitude is: {this.state.location.lon}</h3>
-
             <img src={img} alt="location" id='map'/>
             
           </>
