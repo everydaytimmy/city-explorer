@@ -21,6 +21,10 @@ class App extends React.Component {
 
     const response = await axios.get(apiUrl);
 
+    // const backURL = `http://localhost:3001/weather?lat=${response.data[0].lat}&lon=${response.data[0].lon}`;
+
+    // const weatherResponse = await axios.get(backUrl);
+
     const location = response.data[0];
 
     this.setState({
@@ -31,18 +35,20 @@ class App extends React.Component {
   }
 
   render() {
-    const img = `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_CITY_KEY}&center=${this.state.location.lat},${this.state.location.lon}&format=jpg&zoom=9`;
+    const img = `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_CITY_KEY}&center=${this.state.location.lat},${this.state.location.lon}&format=jpg&zoom=12`;
 
     return (
       <>
-      {/* <Navbar className="bg-light justify-content-between"> */}
+      <Navbar className="bg-light justify-content-between">
         <h2> Enter your city to learn more</h2>
         {/* <Form inline> */}
-        <input onChange={(e) => this.setState({ searchQuery: e.target.value })} placeholder="search for a city"></input>
+          
+          <input onChange={(e) => this.setState({ searchQuery: e.target.value })} placeholder="search for a city"></input>
 
-        <button onClick={this.getLocation}>Explore!</button>
+          <button onClick={this.getLocation}>Explore!</button>
+          
         {/* </Form> */}
-        {/* </Navbar> */}
+        </Navbar>
         {this.state.location.place_id &&
           <>
             <h2>The city is: {this.state.location.display_name}</h2>
