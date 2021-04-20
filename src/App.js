@@ -11,7 +11,8 @@ class App extends React.Component {
     super(props);
     this.state = {
       searchQuery: '',
-      location: {}
+      location: {},
+      weather: {}
     }
   }
 
@@ -21,15 +22,14 @@ class App extends React.Component {
 
     const response = await axios.get(apiUrl);
 
-    // const backURL = `http://localhost:3001/weather?lat=${response.data[0].lat}&lon=${response.data[0].lon}`;
+    const backUrl = `http://localhost:3001/weather?lat=${response.data[0].lat}&lon=${response.data[0].lon}`;
 
-    // const weatherResponse = await axios.get(backUrl);
+    const weatherResponse = await axios.get(backUrl);
 
     const location = response.data[0];
 
     this.setState({
-      location,
-      // same as location:location
+      location: location, weather: weatherResponse.data[0]
     });
 
   }
@@ -52,13 +52,13 @@ class App extends React.Component {
         {this.state.location.place_id &&
           <>
             <h2>The city is: {this.state.location.display_name}</h2>
-
             <h3>The lattitude is: {this.state.location.lat}</h3>
-
             <h3>The longitude is: {this.state.location.lon}</h3>
-            {/* <Image fluid> */}
+            <h3>The date: {this.state.weather.date}</h3>
+            <h3>Weather Condition: {this.state.weather.description}</h3>
+          
             <img src={img} alt="location" id='map'/>
-            {/* </Image> */}
+ 
             
           </>
 
