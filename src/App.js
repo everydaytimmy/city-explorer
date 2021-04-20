@@ -2,8 +2,9 @@ import React from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from 'react-bootstrap/Navbar';
-import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 import './App.css';
+import Weather from './weather.js';
 
 
 class App extends React.Component {
@@ -39,27 +40,23 @@ class App extends React.Component {
 
     return (
       <>
-      <Navbar className="bg-light justify-content-between">
-        <h2> Enter your city to learn more</h2>
-        {/* <Form inline> */}
-          
+        <Navbar className="bg-light justify-content-between">
+          <h2> Enter your city to learn more</h2>
           <input onChange={(e) => this.setState({ searchQuery: e.target.value })} placeholder="search for a city"></input>
-
-          <button onClick={this.getLocation}>Explore!</button>
-          
-        {/* </Form> */}
+          <Button onClick={this.getLocation}>Explore!</Button>
         </Navbar>
+
         {this.state.location.place_id &&
           <>
             <h2>The city is: {this.state.location.display_name}</h2>
             <h3>The lattitude is: {this.state.location.lat}</h3>
             <h3>The longitude is: {this.state.location.lon}</h3>
-            <h3>The date: {this.state.weather.date}</h3>
-            <h3>Weather Condition: {this.state.weather.description}</h3>
-          
-            <img src={img} alt="location" id='map'/>
- 
-            
+            <Weather 
+            date={this.state.weather.date}
+            description={this.state.weather.description}/>
+
+            <img src={img} alt="location" id='map' />
+
           </>
 
         }
