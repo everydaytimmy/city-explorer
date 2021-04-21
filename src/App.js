@@ -15,27 +15,34 @@ class App extends React.Component {
       error: {},
       isError: false,
       location: {},
-      weather: {},
+      weather: [],
     }
   }
 
-  getLocation = async () => {
+  getInformation = async () => {
     try {
-      const apiUrl = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_CITY_KEY}&q=${this.state.searchQuery}&format=json`;
+      // LOCATION INFORMATION
+      const locationURL = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_CITY_KEY}&q=${this.state.searchQuery}&format=json`;
 
-      const response = await axios.get(apiUrl);
-
-      const backUrl = `http://localhost:3001/weather?lat=${response.data[0].lat}&lon=${response.data[0].lon}`;
-
-      const weatherResponse = await axios.get(backUrl);
+      const response = await axios.get(locationURL);
 
       const location = response.data[0];
       this.setState({
         location: location,
-        weather: weatherResponse.data[0],
         isError: false,
       })
 
+      // WEATHER INFORMATION
+      const weatherURL = `http://localhost:3001/weather?lat=${response.data[0].lat}&lon=${response.data[0].lon}`;
+
+      const weatherResponse = await axios.get(weatherURL);
+      console.log(weatherResponse.data);
+      
+      this.setState({
+        weather: weatherResponse.data,
+      })
+
+      
     } catch (error) {
       this.setState({
         error,
@@ -46,38 +53,37 @@ class App extends React.Component {
   }
 
 
-  render() {
-    const img = `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_CITY_KEY}&center=${this.state.location.lat},${this.state.location.lon}&format=jpg&zoom=12`;
+render() {
+  const img = `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_CITY_KEY}&center=${this.state.location.lat},${this.state.location.lon}&format=jpg&zoom=12`;
 
-    return (
-      <>
-        <Navbar className="bg-light justify-content-between">
-          <h2> Enter your city to learn more</h2>
-          <input onChange={(e) => this.setState({ searchQuery: e.target.value })} placeholder="search for a city"></input>
-          <Button onClick={this.getLocation}>Explore!</Button>
-        </Navbar>
-       
-        {this.state.isError &&
-          <h1> ERROR! {this.state.error.message} </h1>
-          }
-        
-        {this.state.location.place_id &&
-          <>
-            <h2>The city is: {this.state.location.display_name}</h2>
-            <h3>The lattitude is: {this.state.location.lat}</h3>
-            <h3>The longitude is: {this.state.location.lon}</h3>
-            <Weather
-              date={this.state.weather.date}
-              description={this.state.weather.description} />
+  return (
+    <>
+      <Navbar className="bg-light justify-content-between">
+        <h2> Enter your city to learn more</h2>
+        <input onChange={(e) => this.setState({ searchQuery: e.target.value })} placeholder="search for a city"></input>
+        <Button onClick={this.getInformation}>Explore!</Button>
+      </Navbar>
 
-            <img src={img} alt="location" id='map' />
+      {this.state.isError &&
+        <h1> ERROR! {this.state.error.message} </h1>
+      }
 
-          </>
+      {this.state.location.place_id &&
+        <>
+          <h2>The city is: {this.state.location.display_name}</h2>
+          <h3>The lattitude is: {this.state.location.lat}</h3>
+          <h3>The longitude is: {this.state.location.lon}</h3>
+          <Weather
+            weatherList = {this.state.weather} />
 
-        }
-      </>
-    )
-  }
+          <img src={img} alt="location" id='map' />
+
+        </>
+
+      }
+    </>
+  )
+}
 }
 
 export default App;
