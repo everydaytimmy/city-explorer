@@ -86,12 +86,13 @@ class App extends React.Component {
             <h2>The city is: {this.state.location.display_name}</h2>
             <h3>The lattitude is: {this.state.location.lat}</h3>
             <h3>The longitude is: {this.state.location.lon}</h3>
+            <img src={img} alt="location" id='map' />
             <Weather
               weatherList={this.state.weather} />
             <Movie
               movieList={this.state.movie} />
 
-            <img src={img} alt="location" id='map' />
+            
 
           </>
 
