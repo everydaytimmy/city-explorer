@@ -17,7 +17,7 @@ class App extends React.Component {
       isError: false,
       location: {},
       weather: [],
-      movies: [],
+      movie: [],
     }
   }
 
@@ -38,7 +38,6 @@ class App extends React.Component {
       const weatherURL = `http://localhost:3001/weather?lat=${response.data[0].lat}&lon=${response.data[0].lon}`;
 
       const weatherResponse = await axios.get(weatherURL);
-
       this.setState({
         weather: weatherResponse.data,
       })
@@ -86,7 +85,7 @@ class App extends React.Component {
             <Weather
               weatherList={this.state.weather} />
             <Movie
-              movieList={this.state.movies} />
+              movieList={this.state.movie} />
 
             <img src={img} alt="location" id='map' />
 
