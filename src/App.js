@@ -21,36 +21,20 @@ class App extends React.Component {
     }
   }
 
-  getInformation = async () => {
+  getInformation = async (event) => {
+    event.preventDefault();
     try {
       // LOCATION INFORMATION
       const locationURL = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_CITY_KEY}&q=${this.state.searchQuery}&format=json`;
 
       const response = await axios.get(locationURL);
-
       const location = response.data[0];
       this.setState({
         location: location,
         isError: false,
       })
-
-      // WEATHER INFORMATION
-      const weatherURL = `http://localhost:3001/weather?lat=${response.data[0].lat}&lon=${response.data[0].lon}`;
-
-      const weatherResponse = await axios.get(weatherURL);
-      this.setState({
-        weather: weatherResponse.data,
-      })
-
-      // MOVIE INFORMATION
-      const movieURL = `http://localhost3001/movie?city=${response.city}`
-
-      const movieResponse = await axios.get(movieURL);
-
-      this.setState({
-        movie: movieResponse.city,
-      })
-
+      this.getWeather();
+      this.getMovies();
 
     } catch (error) {
       this.setState({
@@ -59,6 +43,26 @@ class App extends React.Component {
         location: "",
       });
     }
+  }
+
+  getWeather = async () => {
+    const weatherURL = `http://localhost:3001/weather?lat=${this.state.location.lat}&lon=${this.state.location.lon}`;
+
+    const weatherResponse = await axios.get(weatherURL);
+
+    this.setState({
+      weather: weatherResponse.data,
+    })
+  }
+
+  getMovies = async () => {
+    const movieURL = `http://localhost:3001/movie?searchQuery=${this.state.searchQuery}`
+
+    const movieResponse = await axios.get(movieURL);
+
+    this.setState({
+      movie: movieResponse.data,
+    })
   }
 
 
