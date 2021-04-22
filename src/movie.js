@@ -12,6 +12,8 @@ export default class Movie extends React.Component {
         {this.props.movieList.map((n, index) => {
           return <div key={index}>
             <h3>Movie: {n.title}</h3>
+            <h3>Overview: {n.overview}</h3>
+            <h3>Popularity: {n.popularity}</h3>
           </div>
         })
         }
