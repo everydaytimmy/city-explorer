@@ -48,6 +48,8 @@ class App extends React.Component {
   getWeather = async () => {
     const weatherURL = `https://city-explorer-tv.herokuapp.com/weather?lat=${this.state.location.lat}&lon=${this.state.location.lon}`;
 
+    // const weatherURL = `http://localhost:3001/weather?lat=${this.state.location.lat}&lon=${this.state.location.lon}`;
+
     const weatherResponse = await axios.get(weatherURL);
 
     this.setState({
@@ -57,6 +59,8 @@ class App extends React.Component {
 
   getMovies = async () => {
     const movieURL = `https://city-explorer-tv.herokuapp.com/movie?searchQuery=${this.state.searchQuery}`
+
+    // const movieURL = `http://localhost:3001/movie?searchQuery=${this.state.searchQuery}`
 
     const movieResponse = await axios.get(movieURL);
 
@@ -92,7 +96,7 @@ class App extends React.Component {
             <Movie
               movieList={this.state.movie} />
 
-            
+
 
           </>
 
