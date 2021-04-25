@@ -1,6 +1,9 @@
 import React from 'react';
+import Card from 'react-bootstrap/Card';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+import { CardDeck } from 'react-bootstrap';
 
 
 
@@ -9,14 +12,19 @@ export default class Movie extends React.Component {
     console.log(this.props);
     return (
       <>
-        {this.props.movieList.map((n, index) => {
-          return <div key={index}>
-            <h3>Movie: {n.title}</h3>
-            <h3>Overview: {n.overview}</h3>
-            <h3>Popularity: {n.popularity}</h3>
-          </div>
-        })
-        }
+        <CardDeck>
+          {this.props.movieList.map((n, index) => {
+            return (
+            <Card style={{minWidth: '18rem'}} key={index}>
+              <Card.Title>Movie: {n.title}</Card.Title>
+              <Card.Text>Overview: {n.overview}</Card.Text>
+              <Card.Text>Popularity: {n.popularity}</Card.Text>
+            </Card>
+            )
+          })
+          }
+        </CardDeck>
+
       </>
     );
   }

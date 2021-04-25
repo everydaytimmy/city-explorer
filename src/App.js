@@ -3,6 +3,7 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
 import './App.css';
 import Weather from './weather.js';
 import Movie from './movie.js';
@@ -71,7 +72,7 @@ class App extends React.Component {
 
 
   render() {
-    const img = `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_CITY_KEY}&center=${this.state.location.lat},${this.state.location.lon}&format=jpg&zoom=12`;
+    const img = `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_CITY_KEY}&center=${this.state.location.lat},${this.state.location.lon}&format=jpg&zoom=13`;
 
     return (
       <>
@@ -86,19 +87,17 @@ class App extends React.Component {
         }
 
         {this.state.location.place_id &&
-          <>
-            <h2>The city is: {this.state.location.display_name}</h2>
-            <h3>The lattitude is: {this.state.location.lat}</h3>
-            <h3>The longitude is: {this.state.location.lon}</h3>
+          <Container fluid>
+
+            <h2>{this.state.location.display_name}</h2>
+            <h4>Lattitude: {this.state.location.lat} Longitude: {this.state.location.lon}</h4>
             <img src={img} alt="location" id='map' />
             <Weather
               weatherList={this.state.weather} />
             <Movie
               movieList={this.state.movie} />
 
-
-
-          </>
+          </Container>
 
         }
       </>
